@@ -1,0 +1,23 @@
+<configuration>
+
+    <!-- Appender a consola -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Nivel global en tests -->
+    <root level="DEBUG">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+    <!-- Más detalle para Redisson/Netty si quieres rastrear -->
+    <logger name="org.redisson" level="INFO"/>
+    <logger name="io.netty" level="INFO"/>
+
+    <!-- Menos ruido para dependencias comunes -->
+    <logger name="org.springframework" level="INFO"/>
+    <logger name="reactor" level="WARN"/>
+
+</configuration>
