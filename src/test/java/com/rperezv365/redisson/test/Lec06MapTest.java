@@ -1,9 +1,12 @@
 package com.rperezv365.redisson.test;
 
+import com.rperezv365.redisson.test.dto.Student;
+import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.redisson.api.RMapReactive;
 import org.redisson.client.codec.StringCodec;
+import org.redisson.codec.TypedJsonJacksonCodec;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
@@ -42,6 +45,33 @@ public class Lec06MapTest extends BaseTest {
         );
 
         StepVerifier.create(map.putAll(javaMap).then())
+                .verifyComplete();
+    }
+
+    @Test
+    public void mapTest3() {
+        // Map<Integer, Student>
+        TypedJsonJacksonCodec code = new TypedJsonJacksonCodec(Integer.class, Student.class);
+        RMapReactive<Integer, Student> map = super.client.getMap("users", code);
+
+        Student student1 = Student.builder()
+                .name("sam")
+                .age(10)
+                .city("atlanta")
+                .marks(List.of(1, 2, 3))
+                .build();
+
+        Student student2 = Student.builder()
+                .name("jake")
+                .age(30)
+                .city("miami")
+                .marks(List.of(10, 20, 30))
+                .build();
+
+        Mono<Student> mono1 = map.put(1, student1);
+        Mono<Student> mono2 = map.put(2, student2);
+
+        StepVerifier.create(mono1.concatWith(mono2).then())
                 .verifyComplete();
     }
 
