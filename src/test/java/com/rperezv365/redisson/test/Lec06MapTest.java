@@ -51,8 +51,8 @@ public class Lec06MapTest extends BaseTest {
     @Test
     public void mapTest3() {
         // Map<Integer, Student>
-        TypedJsonJacksonCodec code = new TypedJsonJacksonCodec(Integer.class, Student.class);
-        RMapReactive<Integer, Student> map = super.client.getMap("users", code);
+        TypedJsonJacksonCodec codec = new TypedJsonJacksonCodec(Integer.class, Student.class);
+        RMapReactive<Integer, Student> map = super.client.getMap("users", codec);
 
         Student student1 = Student.builder()
                 .name("sam")
