@@ -34,7 +34,7 @@ public class Lec10MessageQueueTest extends BaseTest {
 
         this.msgQueue.takeElements()
                 .doOnNext(i -> log.info("Consumer 1: {}", i))
-                .doOnError(error -> log.info("{}", error))
+                .doOnError(error -> log.error("{}", error))
                 .subscribe();
 
         super.sleep(600_000);
@@ -45,7 +45,7 @@ public class Lec10MessageQueueTest extends BaseTest {
 
         this.msgQueue.takeElements()
                 .doOnNext(i -> log.info("Consumer 2: {}", i))
-                .doOnError(error -> log.info("{}", error))
+                .doOnError(error -> log.error("{}", error))
                 .subscribe();
 
         super.sleep(600_000);
