@@ -23,7 +23,7 @@ public class PriorityQueue {
 
     public Mono<Void> add(UserOrder order) {
         return this.queue.add(
-                order.getCategory().ordinal(),
+                this.getScore(order.getCategory()),
                 order
         ).then();
     }
@@ -31,6 +31,10 @@ public class PriorityQueue {
     public Flux<UserOrder> takeItems() {
         return this.queue.takeFirstElements()
                 .limitRate(1);
+    }
+
+    private double getScore(Category category) {
+        return category.ordinal() + Double.parseDouble("0." + System.nanoTime());
     }
 
 }
