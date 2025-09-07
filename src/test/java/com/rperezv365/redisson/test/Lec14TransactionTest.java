@@ -71,7 +71,7 @@ public class Lec14TransactionTest extends BaseTest {
                 .map(i -> 5 / i) // some error
                 .then(transaction.commit())
                 .doOnError(e -> log.error("Error in transaction: {}", e.getMessage()))
-                .doOnError(e -> transaction.rollback())
+                .onErrorResume(e -> transaction.rollback())
                 .subscribe();
 
         sleep(1_000);
